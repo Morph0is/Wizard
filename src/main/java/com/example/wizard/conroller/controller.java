@@ -1,4 +1,4 @@
 package com.example.wizard.conroller;
 
-public class Controller {
+public class controller {
 }
