@@ -6,9 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/*
+Todo: Hier werden ausschliesslich alle SQL Statements erstellt in Variablen die dann  in der Controller klasse übergeben werden.
+ Alle methoden die zur steuerung der Maske  dienen die sich in dieser Klasse befinden müssen in den Controller überführt werden.
+ */
+
 public class DatabaseHandler {
 
-    // Verbindungs-URL, Benutzername und Passwort für die Datenbank
+    /**
+     * SQL Statement Collection
+     */
+    private final String allesLesen = "SELECT * FROM wizard";
+
+
+    /**
+     *  Verbindungs - URL, Benutzername und Passwort für die Datenbank
+     */
+
     private final String url = "jdbc:mysql://bnfpbzfl49ffy485x4gh-mysql.services.clever-cloud.com:3306/bnfpbzfl49ffy485x4gh";
     private final String user = "u3jf91cj3vfi46hw";
     private final String password = "wTiD2blNRmBU0IwrVwEG";
@@ -19,6 +33,8 @@ public class DatabaseHandler {
     /**
      * Konstruktor der Klasse. Stellt eine Verbindung zur Datenbank her.
      */
+
+
     public DatabaseHandler() {
         try {
             conn = DriverManager.getConnection(url, user, password);
@@ -35,7 +51,7 @@ public class DatabaseHandler {
     public ResultSet getWizards() {
         try {
             Statement stmt = conn.createStatement();
-            return stmt.executeQuery("SELECT * FROM wizard");
+            return stmt.executeQuery(allesLesen);
         } catch (SQLException e) {
             e.printStackTrace();
         }
