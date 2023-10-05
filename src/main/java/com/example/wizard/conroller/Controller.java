@@ -12,5 +12,6 @@ Todo : In Diesem File können wir das Databinding machen mit (Bidirectional).
  - viaidierung  der Daten und  Steuerung  der Butoons
  */
 
-public class controller {
+public class Controller {
+
 }

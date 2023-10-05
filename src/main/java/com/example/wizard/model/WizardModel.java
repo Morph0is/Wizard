@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class WozardModel {
+public class WizardModel {
 
     private StringProperty firstnameField;
     private StringProperty lastNameField;
@@ -14,7 +14,7 @@ public class WozardModel {
     private StringProperty regionField;
     private IntegerProperty childrenField;
 
-    public WozardModel() {
+    public WizardModel() {
 
         this.firstnameField = new SimpleStringProperty();
         this.lastNameField = new SimpleStringProperty();
