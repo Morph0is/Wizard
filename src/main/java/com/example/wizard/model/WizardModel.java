@@ -5,7 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Properties die in der Controller-Klasse dann mit Data-binding an die Id's der View verbunden werden.
+ */
+
 public class WizardModel {
+
 
     private StringProperty firstnameField;
     private StringProperty lastNameField;
@@ -14,6 +19,8 @@ public class WizardModel {
     private StringProperty regionField;
     private IntegerProperty childrenField;
 
+
+    //Konstruktor dieser Klasse
     public WizardModel() {
 
         this.firstnameField = new SimpleStringProperty();
@@ -24,7 +31,7 @@ public class WizardModel {
         this.childrenField = new SimpleIntegerProperty();
     }
 
-
+    //Getter und Setter
     public String getFirstnameField() {
         return firstnameField.get();
     }
