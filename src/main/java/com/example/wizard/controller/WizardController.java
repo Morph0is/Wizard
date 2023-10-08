@@ -32,9 +32,6 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
     public class WizardController {
 
 
-
-    @FXML
-    private Button submitBtn;
     @FXML
     private TextField secondNameField;
     @FXML
@@ -54,8 +51,8 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
     @FXML
     private Label messageLabel;
 
-        WizardModel wizardModel = new WizardModel();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+    WizardModel wizardModel = new WizardModel();
+    DatabaseHandler databaseHandler = new DatabaseHandler();
 
 
     /**
@@ -63,50 +60,51 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
      *  Methoden müssen noch mit dem Databinding verbunden werden.
      *  muss noch check box einbauen zum testen.
      *  aktuell ist ein Test - Textfield im Einsatz.
-      */
+     */
 
     //Databinding
-        public void initialize() {
-            firstNameField.textProperty().bindBidirectional(wizardModel.firstnameFieldProperty());
-            secondNameField.textProperty().bindBidirectional(wizardModel.lastNameFieldProperty());
-            birthdayField.textProperty().bindBidirectional(wizardModel.birthDayProperty());
-            ahvNummberField.textProperty().bindBidirectional(wizardModel.ahvNumberProperty());
-            regionField.textProperty().bindBidirectional(wizardModel.regionProperty());
-            childrenField.textProperty().bindBidirectional(wizardModel.childrenFieldProperty());
-            malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
-            //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
+    public void initialize() {
+        firstNameField.textProperty().bindBidirectional(wizardModel.firstnameFieldProperty());
+        secondNameField.textProperty().bindBidirectional(wizardModel.lastNameFieldProperty());
+        birthdayField.textProperty().bindBidirectional(wizardModel.birthDayProperty());
+        ahvNummberField.textProperty().bindBidirectional(wizardModel.ahvNumberProperty());
+        regionField.textProperty().bindBidirectional(wizardModel.regionProperty());
+        childrenField.textProperty().bindBidirectional(wizardModel.childrenFieldProperty());
+        malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
+        //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
+        //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
+    }
 
-        }
+    //Holt alle Datensätze aus der Datenbank
+    public void showWizards() {
 
-        //Holt alle Datensätze aus der Datenbank
-        public void showWizards() {
+        try {
+            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.SELECT_ALL.getQuery());
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            try {
-                    PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.SELECT_ALL.getQuery());
-                    ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String vorname = resultSet.getString("vorname");
+                String name = resultSet.getString("name");
+                String geburtsdatum = resultSet.getString("geburtsdatum");
+                String ahvnr = resultSet.getString("ahvnr");
+                String region = resultSet.getString("region");
+                int kinder = resultSet.getInt("kinder");
+                boolean geschlecht = resultSet.getBoolean(String.valueOf("geschlecht"));
 
-                while (resultSet.next()) {
-                    String vorname = resultSet.getString("vorname");
-                    String name = resultSet.getString("name");
-                    String geburtsdatum = resultSet.getString("geburtsdatum");
-                    String ahvnr = resultSet.getString("ahvnr");
-                    String region = resultSet.getString("region");
-                    int kinder = resultSet.getInt("kinder");
-                    boolean geschlecht = resultSet.getBoolean(String.valueOf("geschlecht"));
-
-                    //messageService("Eine Person wurde gerade zudefuegt");
-                    System.out.println("Name: " + name + ", Vorname: " + vorname + ", Geburtsdatum: " + geburtsdatum +
-                            ", AHV Nummer: " + ahvnr + ", Region: " + region + ", Kinder: " + kinder + ", Ist Männlich: " + geschlecht);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println("Name: " + name + ", Vorname: " + vorname + ", Geburtsdatum: " + geburtsdatum +
+                        ", AHV Nummer: " + ahvnr + ", Region: " + region + ", Kinder: " + kinder + ", Ist Männlich: " + geschlecht);
+                //messageService("Eine Person wurde gerade zudefuegt");
+                messageLabel.setText("Eine Person wurde gerade zudefuegt");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
 
     //Neue Person einfügen
-    public void insertPerson(){
+    public void insertPerson() {
         /**
          * Todo: Hier werden wir dann den Inhalt der übergeben wird austauschen dur den Inhalt(Variablen), die aus der Maske kommen.
          */
@@ -145,8 +143,8 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
             }
         } catch (SQLException e) {
             System.out.println("Fehler! Da ist etwas schief gelaufen: " + e.getMessage());
-            }
         }
+    }
 
     public void onActionsubmitBtn(ActionEvent actionEvent) {
         insertPerson();
@@ -154,17 +152,19 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
 
     /**
      * Todo: Hier muss ich noch die Methode so verändern, das ich auch eine Farbe übergeben kann jeweils.
+     *
      * @param message
      * @return
      */
 
-    /**
+
     public String messageService(String message) {
+
 
         System.out.println(message);
         return message;
-    */
 
-     }
 
+    }
+}
 

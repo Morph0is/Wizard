@@ -18,8 +18,19 @@ public class WizardModel {
 
     private StringProperty maleCheckField;
 
+    private StringProperty messageLabelField;
 
+    public String getMessageLabelField() {
+        return messageLabelField.get();
+    }
 
+    public StringProperty messageLabelFieldProperty() {
+        return messageLabelField;
+    }
+
+    public void setMessageLabelField(String messageLabelField) {
+        this.messageLabelField.set(messageLabelField);
+    }
 
     //Konstruktor dieser Klasse
     public WizardModel() {

@@ -11,23 +11,25 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class MainController {
+import static com.example.wizard.MainApp.switchToView;
 
+public class MainController {
     @FXML
-    private AnchorPane testView;
+    private AnchorPane content;
+
 
 
 
     public void switchContent(Pane root) {
         StackPane stackPane = new StackPane(root);
         StackPane.setAlignment(root, Pos.CENTER);
-        testView.getChildren().clear();
-        testView.getChildren().add(stackPane);
+        content.getChildren().clear();
+        content.getChildren().add(stackPane);
     }
 
 
     public void OnActionNeuPersonBtn(ActionEvent actionEvent) {
-
+        switchToView(StaticViews.WozardView);
     }
 
     public void OnActionShowPersons(ActionEvent actionEvent) {
