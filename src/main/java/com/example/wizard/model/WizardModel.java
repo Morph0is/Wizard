@@ -1,9 +1,6 @@
 package com.example.wizard.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 /**
  * Properties die in der Controller-Klasse dann mit Data-binding an die Id's der View verbunden werden.
@@ -17,7 +14,11 @@ public class WizardModel {
     private StringProperty birthDayField ;
     private StringProperty ahvNumberField;
     private StringProperty regionField;
-    private IntegerProperty childrenField;
+    private StringProperty childrenField;
+
+    private StringProperty maleCheckField;
+
+
 
 
     //Konstruktor dieser Klasse
@@ -28,7 +29,8 @@ public class WizardModel {
         this.birthDayField = new SimpleStringProperty();
         this.ahvNumberField = new SimpleStringProperty();
         this.regionField = new SimpleStringProperty();
-        this.childrenField = new SimpleIntegerProperty();
+        this.childrenField = new SimpleStringProperty();
+        this.maleCheckField = new SimpleStringProperty();
     }
 
     //Getter und Setter
@@ -92,27 +94,40 @@ public class WizardModel {
         this.regionField.set(region);
     }
 
-    public int getChildrenField() {
+    public String getChildrenField() {
         return childrenField.get();
     }
 
-    public IntegerProperty childrenFieldProperty() {
+    public StringProperty childrenFieldProperty() {
         return childrenField;
     }
 
-    public void setChildrenField(int childrenField) {
+    public void setChildrenField(String childrenField) {
         this.childrenField.set(childrenField);
+    }
+
+    public String getMaleCheckField() {
+        return maleCheckField.get();
+    }
+
+    public StringProperty maleCheckFieldProperty() {
+        return maleCheckField;
+    }
+
+    public void setMaleCheckField(String maleCheckField) {
+        this.maleCheckField.set(maleCheckField);
     }
 
     @Override
     public String toString() {
-        return "WozardModel{" +
-                "forstname=" + firstnameField +
-                ", lastName=" + lastNameField +
-                ", birthDay=" + birthDayField +
-                ", ahvNumber=" + ahvNumberField +
-                ", region=" + regionField +
-                ", children=" + childrenField +
+        return "WizardModel{" +
+                "firstnameField=" + firstnameField +
+                ", lastNameField=" + lastNameField +
+                ", birthDayField=" + birthDayField +
+                ", ahvNumberField=" + ahvNumberField +
+                ", regionField=" + regionField +
+                ", childrenField=" + childrenField +
+                ", maleCheField=" + maleCheckField +
                 '}';
     }
 }
