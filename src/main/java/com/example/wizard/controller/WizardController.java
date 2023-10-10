@@ -1,6 +1,5 @@
 package com.example.wizard.controller;
 
-import com.example.wizard.helper.Colors;
 import com.example.wizard.model.WizardModel;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
@@ -30,8 +29,8 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
  * In dieser Klasse wird die View mit dem Model mit Data-binding verbunden.
  * Hier finden auch alle Validierungen statt bevor sie in die Datenbank zugelassen werden.
  */
-
     public class WizardController {
+
 
     @FXML
     private TextField secondNameField;
@@ -94,7 +93,8 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
 
                 System.out.println("Name: " + name + ", Vorname: " + vorname + ", Geburtsdatum: " + geburtsdatum +
                         ", AHV Nummer: " + ahvnr + ", Region: " + region + ", Kinder: " + kinder + ", Ist Männlich: " + geschlecht);
-
+                //messageService("Eine Person wurde gerade zudefuegt");
+                messageLabel.setText("Eine Person wurde gerade zudefuegt");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,6 +105,9 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
 
     //Neue Person einfügen
     public void insertPerson() {
+        /**
+         * Todo: Hier werden wir dann den Inhalt der übergeben wird austauschen dur den Inhalt(Variablen), die aus der Maske kommen.
+         */
 
         try {
             PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.EINFUEGEN.getQuery());
@@ -117,6 +120,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
             Date parseDate = simpleDateFormat.parse( "1980-02-23");
             java.sql.Date sqlDate = new java.sql.Date(parseDate.getTime());
             preparedStatement.setDate(3, sqlDate);
+
              */
 
             //zweite Variante um Datum zu übergeben
@@ -131,13 +135,10 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
             boolean maleCheckFieldBoolean = Boolean.parseBoolean(malecheckField.getText());
             preparedStatement.setBoolean(7, maleCheckFieldBoolean);
 
+
             //Ausführung des Statements.
             int rowsInserted = preparedStatement.executeUpdate(); // SQL-Statement ausführen
             if (rowsInserted > 0) {
-
-               // messageLabel.setText("Eine Person wurde gerade zudefuegt");
-               // messageLabel.setStyle("-fx-text-fill: red;");
-                messageService("Es wurd ein neuer Datensatz erstellt", String.valueOf(Colors.GREEN));
                 System.out.println("Ein neuer Datensatz wurde erfolgreich eingefügt.");
             }
         } catch (SQLException e) {
@@ -149,10 +150,21 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
         insertPerson();
     }
 
-    public void messageService(String text, String color) {
+    /**
+     * Todo: Hier muss ich noch die Methode so verändern, das ich auch eine Farbe übergeben kann jeweils.
+     *
+     * @param message
+     * @return
+     */
 
-        messageLabel.setText(text);
-        messageLabel.setStyle(color);
+
+    public String messageService(String message) {
+
+
+        System.out.println(message);
+        return message;
+
+
     }
 }
 
