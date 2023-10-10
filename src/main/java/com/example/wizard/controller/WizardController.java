@@ -50,6 +50,10 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
     private CheckBox femaleCheckbox;
     @FXML
     private Label messageLabel;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button editButton;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -79,6 +83,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
     public void showWizards() {
 
         try {
+
             PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.SELECT_ALL.getQuery());
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -146,9 +151,55 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
         }
     }
 
+    public void editPerson(int personID) {
+        try {
+            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.AKTUALISIEREN.getQuery());
+            preparedStatement.setString(1, secondNameField.getText());
+            preparedStatement.setString(2, firstNameField.getText());
+            Date sqlDate = Date.valueOf(birthdayField.getText());
+            preparedStatement.setDate(3, sqlDate);
+            preparedStatement.setString(4, ahvNummberField.getText());
+            preparedStatement.setString(5, regionField.getText());
+            String childrenFieldString = childrenField.getText();
+            int childrenFieldInt = Integer.parseInt(childrenFieldString);
+            preparedStatement.setInt(6, childrenFieldInt);
+            boolean maleCheckFieldBoolean = Boolean.parseBoolean(malecheckField.getText());
+            preparedStatement.setBoolean(7, maleCheckFieldBoolean);
+            preparedStatement.setInt(8, personID); // Annahme: personID ist die eindeutige ID des zu bearbeitenden Datensatzes
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Datensatz erfolgreich aktualisiert.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Fehler! Da ist etwas schief gelaufen: " + e.getMessage());
+        }
+    }
+
+
+    public void deletePerson(int personID) {
+        try {
+            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.LOESCHEN.getQuery());
+            preparedStatement.setInt(1, personID); // Annahme: personID ist die eindeutige ID des zu löschenden Datensatzes
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Datensatz erfolgreich gelöscht.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Fehler! Da ist etwas schief gelaufen: " + e.getMessage());
+        }
+    }
+
+
+
+
     public void onActionsubmitBtn(ActionEvent actionEvent) {
         insertPerson();
     }
+
+
+
 
     /**
      * Todo: Hier muss ich noch die Methode so verändern, das ich auch eine Farbe übergeben kann jeweils.
@@ -166,5 +217,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
 
 
     }
+
+
 }
 

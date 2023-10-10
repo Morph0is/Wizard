@@ -3,12 +3,10 @@ package com.example.wizard;
 import com.example.wizard.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class MainApp extends Application {
 
