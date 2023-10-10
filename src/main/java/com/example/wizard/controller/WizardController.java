@@ -1,16 +1,22 @@
 package com.example.wizard.controller;
 
+import com.example.wizard.StaticViews;
+import com.example.wizard.helper.Colors;
 import com.example.wizard.model.WizardModel;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.sql.*;
+
+import static com.example.wizard.MainApp.switchToView;
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
 
@@ -22,14 +28,15 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
  - @FXML  Initialisierungen der Variablen, aus der Maske.   ###Erledigt
  - public  void initialize()                                ###Erledigt
  - Data-binding                                             ###Erledigt
- - Validierung  der Daten und  Steuerung  der Buttons
+ - Validierung  der Daten und  Steuerung  der Buttons       ***inPROGESS
+ - Methoden DELETE und EDIT einfuegen                       ***inPROGRESS
  */
 
 /**
  * In dieser Klasse wird die View mit dem Model mit Data-binding verbunden.
  * Hier finden auch alle Validierungen statt bevor sie in die Datenbank zugelassen werden.
  */
-    public class WizardController {
+public class WizardController {
 
 
     @FXML
@@ -79,40 +86,40 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
         //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
     }
 
-    //Holt alle Datensätze aus der Datenbank
-    public void showWizards() {
+    public void onActionsubmitBtn(ActionEvent event) {
+        String firstName = wizardModel.getFirstnameField();
+        String lastName = wizardModel.getLastNameField();
+        String birthday = wizardModel.getBirthDay();
+        String ahvNumber = wizardModel.getAhvNumber();
+        String region = wizardModel.getRegion();
+        String children = wizardModel.getChildrenField();
+        String malecheck = wizardModel.getMaleCheckField();
 
-        try {
+        if (firstName == null || firstName.isEmpty() ||
+                lastName == null || lastName.isEmpty() ||
+                birthday == null || birthday.isEmpty() ||
+                ahvNumber == null || ahvNumber.isEmpty() ||
+                region == null || region.isEmpty() ||
+                children == null || children.isEmpty() ||
+                malecheck == null || malecheck.isEmpty()) {
+            messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
 
-            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.SELECT_ALL.getQuery());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String vorname = resultSet.getString("vorname");
-                String name = resultSet.getString("name");
-                String geburtsdatum = resultSet.getString("geburtsdatum");
-                String ahvnr = resultSet.getString("ahvnr");
-                String region = resultSet.getString("region");
-                int kinder = resultSet.getInt("kinder");
-                boolean geschlecht = resultSet.getBoolean(String.valueOf("geschlecht"));
-
-                System.out.println("Name: " + name + ", Vorname: " + vorname + ", Geburtsdatum: " + geburtsdatum +
-                        ", AHV Nummer: " + ahvnr + ", Region: " + region + ", Kinder: " + kinder + ", Ist Männlich: " + geschlecht);
-                //messageService("Eine Person wurde gerade zudefuegt");
-                messageLabel.setText("Eine Person wurde gerade zudefuegt");
+        } else {
+            try {
+                Date.valueOf(birthday);
+            } catch (IllegalArgumentException e) {
+                messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'yyyy-mm-dd'.", Colors.RED);
+                return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
+            insertPerson();
+            messageService("Anmeldung erfolgreich!", Colors.GREEN);
+        }
     }
 
 
     //Neue Person einfügen
     public void insertPerson() {
-        /**
-         * Todo: Hier werden wir dann den Inhalt der übergeben wird austauschen dur den Inhalt(Variablen), die aus der Maske kommen.
-         */
 
         try {
             PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.EINFUEGEN.getQuery());
@@ -146,6 +153,13 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
             int rowsInserted = preparedStatement.executeUpdate(); // SQL-Statement ausführen
             if (rowsInserted > 0) {
                 System.out.println("Ein neuer Datensatz wurde erfolgreich eingefügt.");
+
+                //verzögerung
+                PauseTransition pause = new PauseTransition(Duration.seconds(2.5));
+                pause.setOnFinished(e -> switchToView(StaticViews.WizardView));
+                pause.play();
+
+
             }
         } catch (SQLException e) {
             System.out.println("Fehler! Da ist etwas schief gelaufen: " + e.getMessage());
@@ -192,31 +206,10 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
         }
     }
 
-
-
-
-    public void onActionsubmitBtn(ActionEvent actionEvent) {
-        insertPerson();
-    }
-
-
-
-
-    /**
-     * Todo: Hier muss ich noch die Methode so verändern, das ich auch eine Farbe übergeben kann jeweils.
-     *
-     * @param message
-     * @return
-     */
-
-
-    public String messageService(String message) {
-
-
-        System.out.println(message);
-        return message;
-
-
+    //Diese Methode dient dazu einen Nachricht direkt auf die Visu auszugeben mit der entsprechenden Farbe.
+    public void messageService(String message, Colors color) {
+        messageLabel.setText(message);
+        messageLabel.setStyle(color.c);
     }
 
 

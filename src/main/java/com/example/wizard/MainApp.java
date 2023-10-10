@@ -17,7 +17,7 @@ public class MainApp extends Application {
         fxmlLoader.load();
         mainController = fxmlLoader.getController();
         Scene scene = new Scene(fxmlLoader.getRoot());
-        stage.setTitle("StartView");
+        stage.setTitle("WIZARD");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
