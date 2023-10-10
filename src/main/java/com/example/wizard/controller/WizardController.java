@@ -118,7 +118,9 @@ public class WizardController {
     }
 
 
-    //Neue Person einfügen
+    /**
+     * Methode um eine neue Person zu erstellen
+     */
     public void insertPerson() {
 
         try {
