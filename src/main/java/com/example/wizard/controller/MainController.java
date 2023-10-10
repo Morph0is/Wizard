@@ -26,9 +26,13 @@ public class MainController {
 
 
     public void OnActionNeuPersonBtn(ActionEvent actionEvent) {
-        switchToView(StaticViews.WozardView);
+        switchToView(StaticViews.WizardView);
     }
 
     public void OnActionShowPersons(ActionEvent actionEvent) {
+    }
+
+    public void OnActionBackbtn(ActionEvent actionEvent) {
+        switchToView(StaticViews.StartView);
     }
 }
