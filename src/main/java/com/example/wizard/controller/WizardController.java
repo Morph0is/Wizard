@@ -128,6 +128,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
 
              */
 
+
             //zweite Variante um Datum zu übergeben
             Date sqlDate = Date.valueOf(birthdayField.getText());  //Format = "yyyy-mm-dd"
             preparedStatement.setDate(3, sqlDate);
