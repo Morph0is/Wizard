@@ -66,7 +66,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
      *  aktuell ist ein Test - Textfield im Einsatz.
      */
 
-    //Databinding
+    //databinding
     public void initialize() {
         firstNameField.textProperty().bindBidirectional(wizardModel.firstnameFieldProperty());
         secondNameField.textProperty().bindBidirectional(wizardModel.lastNameFieldProperty());
