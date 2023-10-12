@@ -15,7 +15,10 @@ public enum SqlStatement {
 
    public final String query;
 
-    //Konstruktor und GETTER
+    /**
+     * Getter  und  Setter
+     * @param query
+     */
     SqlStatement(String query) {
         this.query = query;
     }
