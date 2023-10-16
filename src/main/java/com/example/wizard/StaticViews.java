@@ -6,4 +6,5 @@ public class StaticViews {
     public static final String ContentView = "/content.fxml";
 
 
+    public static final String listviewPersons ="/listviewPersons.fxml";
 }

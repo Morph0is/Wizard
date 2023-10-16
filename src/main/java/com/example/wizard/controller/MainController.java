@@ -10,13 +10,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+
 import static com.example.wizard.MainApp.switchToView;
 
 public class MainController {
     @FXML
     private AnchorPane content;
-
-
 
 
     public void switchContent(Pane root) {
@@ -32,9 +31,14 @@ public class MainController {
     }
 
     public void OnActionShowPersons(ActionEvent actionEvent) {
+        switchToView(StaticViews.listviewPersons);
+
     }
 
     public void OnActionBackbtn(ActionEvent actionEvent) {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(StaticViews.StartView));
     }
-}
+
+
+    }
+

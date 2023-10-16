@@ -2,22 +2,20 @@ package com.example.wizard.controller;
 
 import com.example.wizard.StaticViews;
 import com.example.wizard.helper.Colors;
-import com.example.wizard.model.WizardModel;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
+import com.example.wizard.model.WizardModel;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import java.net.URL;
-import java.sql.*;
-import java.util.ResourceBundle;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import static com.example.wizard.MainApp.switchToView;
 //import java.text.ParseException;
@@ -39,7 +37,7 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
  * In dieser Klasse wird die View mit dem Model mit Data-binding verbunden.
  * Hier finden auch alle Validierungen statt bevor sie in die Datenbank zugelassen werden.
  */
-public class WizardController implements Initializable {
+public class WizardController {
 
 
     @FXML
@@ -64,10 +62,6 @@ public class WizardController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button editButton;
-    @FXML
-    private AnchorPane content;
-    @FXML
-            private Button sendbtn;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -80,9 +74,8 @@ public class WizardController implements Initializable {
      *  aktuell ist ein Test - Textfield im Einsatz.
      */
 
-
     //databinding
-    public void bindToModel() {
+    public void initialize() {
         firstNameField.textProperty().bindBidirectional(wizardModel.firstnameFieldProperty());
         secondNameField.textProperty().bindBidirectional(wizardModel.lastNameFieldProperty());
         birthdayField.textProperty().bindBidirectional(wizardModel.birthDayProperty());
@@ -92,8 +85,6 @@ public class WizardController implements Initializable {
         malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
-
-
     }
 
     public void onActionsubmitBtn(ActionEvent event) {
@@ -147,6 +138,7 @@ public class WizardController implements Initializable {
 
              */
 
+
             //zweite Variante um Datum zu übergeben
             Date sqlDate = Date.valueOf(birthdayField.getText());  //Format = "yyyy-mm-dd"
             preparedStatement.setDate(3, sqlDate);
@@ -176,7 +168,6 @@ public class WizardController implements Initializable {
             System.out.println("Fehler! Da ist etwas schief gelaufen: " + e.getMessage());
         }
     }
-
 
     public void editPerson(int personID) {
         try {
@@ -218,15 +209,16 @@ public class WizardController implements Initializable {
         }
     }
 
-    //Diese Methode dient dazu eine Nachricht direkt auf die Visualisierung auszugeben mit der entsprechenden Farbe.
+    //Diese Methode dient dazu einen Nachricht direkt auf die Visu auszugeben mit der entsprechenden Farbe.
     public void messageService(String message, Colors color) {
         messageLabel.setText(message);
         messageLabel.setStyle(color.c);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        bindToModel();
-    }
+
+
+
+
+
 }
 
