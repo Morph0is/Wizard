@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class DatabaseHandler {
 
@@ -45,8 +46,10 @@ public class DatabaseHandler {
     /**
      * Zeigt alle Informationen der "wizard"-Datensätze aus der Datenbank an.
      * Liest das ResultSet aus getWizards() und gibt die Daten in der Konsole aus.
+     *
+     * @return
      */
-    public void showWizards() {
+    public List<String> showWizards() {
         ResultSet result = getWizards();
         if (result != null) {
             try {
@@ -66,6 +69,7 @@ public class DatabaseHandler {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 }
 
