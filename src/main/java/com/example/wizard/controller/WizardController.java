@@ -1,11 +1,15 @@
 package com.example.wizard.controller;
 
+
 import com.example.wizard.StaticViews;
 import com.example.wizard.helper.Colors;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
 import com.example.wizard.model.WizardModel;
+import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.animation.PauseTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,9 +17,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import static com.example.wizard.MainApp.switchToView;
 //import java.text.ParseException;
@@ -62,6 +68,8 @@ public class WizardController {
     private Button deleteButton;
     @FXML
     private Button editButton;
+    @FXML
+    private MFXTableView<String> listView;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -85,6 +93,7 @@ public class WizardController {
         malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
+        listeabrufen();
     }
 
     public void onActionsubmitBtn(ActionEvent event) {
@@ -215,10 +224,13 @@ public class WizardController {
         messageLabel.setStyle(color.c);
     }
 
+    public void listeabrufen() {
 
-
-
-
-
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        List<String> wizardList = databaseHandler.showWizards();
+        ObservableList<String> observableList = FXCollections.observableArrayList(wizardList);
+        MFXTableView<String> listView = new MFXTableView<>();
+        listView.setItems(observableList);
+    }
 }
 

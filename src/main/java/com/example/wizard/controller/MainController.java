@@ -34,6 +34,10 @@ public class MainController {
         switchToView(StaticViews.listviewPersons);
 
     }
+    public void OnActionReturnBtn(ActionEvent actionEvent) {
+        switchToView(StaticViews.StartView);
+
+    }
 
     public void OnActionBackbtn(ActionEvent actionEvent) {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(StaticViews.StartView));

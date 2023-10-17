@@ -43,7 +43,7 @@
                <Font name="Arial Nova" size="14.0" />
             </font>
          </MFXButton>
-         <MFXButton buttonType="RAISED" depthLevel="LEVEL5" layoutX="30.0" layoutY="343.0" onAction="#OnActionBackbtn" rippleAnimateShadow="true" rippleColor="#780dd7" rippleRadius="20.0" rippleRadiusMultiplier="5.0" style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Zurück" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+         <MFXButton buttonType="RAISED" depthLevel="LEVEL5" layoutX="30.0" layoutY="343.0" onAction="#OnActionReturnBtn" rippleAnimateShadow="true" rippleColor="#780dd7" rippleRadius="20.0" rippleRadiusMultiplier="5.0" style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Zurück" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
             <font>
                <Font name="Arial Nova" size="14.0" />
             </font>

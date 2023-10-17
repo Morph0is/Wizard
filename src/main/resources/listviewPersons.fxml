@@ -2,6 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyListView?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -22,14 +23,15 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MFXLegacyListView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="799.0" style="-fx-background-radius: 30px 30px 0px 0px; -fx-border-radius: 30px 30px 0px 0px; -fx-background-color: #f4f4f4;" />
-            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Button" GridPane.rowIndex="1">
+            <MFXLegacyListView fx:id="listView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="799.0" style="-fx-background-radius: 30px 30px 0px 0px; -fx-border-radius: 30px 30px 0px 0px; -fx-background-color: #f4f4f4;" />
+            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Kein Funktion" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
             </MFXButton>
-            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Bearbeiten" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <MFXButton style="-fx-background-radius: 30px; -fx-border-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Löschen" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <MFXLegacyTableView GridPane.columnSpan="4" />
          </children>
       </GridPane>
    </children>
