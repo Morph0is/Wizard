@@ -31,8 +31,9 @@ Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
  - @FXML  Initialisierungen der Variablen, aus der Maske.   ###Erledigt
  - public  void initialize()                                ###Erledigt
  - Data-binding                                             ###Erledigt
- - Validierung  der Daten und  Steuerung  der Buttons       ***inPROGESS
+ - Validierung  der Daten und  Steuerung  der Buttons       ***inPROGRESS
  - Methoden DELETE und EDIT einfuegen                       ***inPROGRESS
+ - Zurückbutton wieder zum startpunkt                       ***inPROGRESS
  */
 
 /**
@@ -67,15 +68,14 @@ public class WizardController implements Initializable {
     @FXML
     private AnchorPane content;
     @FXML
-            private Button sendbtn;
+    private Button sendbtn;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
 
     /**
-     * Todo: Databinding ist erledigt.
-     *  Methoden müssen noch mit dem Databinding verbunden werden.
+     * Todo:
      *  muss noch check box einbauen zum testen.
      *  aktuell ist ein Test - Textfield im Einsatz.
      */
@@ -95,7 +95,7 @@ public class WizardController implements Initializable {
 
 
     }
-
+    @FXML
     public void onActionsubmitBtn(ActionEvent event) {
         String firstName = wizardModel.getFirstnameField();
         String lastName = wizardModel.getLastNameField();

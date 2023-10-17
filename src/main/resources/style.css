@@ -12,10 +12,10 @@
 
 
 .sidebar {
-    -fx-background-color: #780dd7;
+    -fx-background-color: linear-gradient(to top, #6B0BC0 0%, #8b0bcc 100%);
     -fx-border-radius: 0px 20px 20px 0px;
     -fx-background-radius: 0px 20px 20px 0px;
-    -fx-effect: dropshadow(Gaussian, rgba(0, 0, 0, 0.2), 50, 0.2, 5, 10);
+    -fx-effect: dropshadow(gaussian, rgba(139, 11, 204, 0.3), 50, 0.2, 5, 10);
 }
 
 

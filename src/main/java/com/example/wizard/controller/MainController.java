@@ -2,6 +2,7 @@ package com.example.wizard.controller;
 
 import com.example.wizard.MainApp;
 import com.example.wizard.StaticViews;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,11 @@ public class MainController {
 
 
 
+
+
+
+
+
     public void switchContent(Pane root) {
         StackPane stackPane = new StackPane(root);
         StackPane.setAlignment(root, Pos.CENTER);
@@ -28,7 +34,13 @@ public class MainController {
 
 
     public void OnActionNeuPersonBtn(ActionEvent actionEvent) {
-        switchToView(StaticViews.WizardView);
+
+        //switchToView(StaticViews.WizardView);
+        Platform.runLater(() -> {
+            invokeTask();
+        });
+
+
     }
 
     public void OnActionShowPersons(ActionEvent actionEvent) {
@@ -36,5 +48,15 @@ public class MainController {
 
     public void OnActionBackbtn(ActionEvent actionEvent) {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(StaticViews.StartView));
+    }
+
+    private void invokeTask() {
+        switchToView(StaticViews.WizardView);
+
+        MainControllerTask mainControllerTask = new MainControllerTask();
+
+        Thread th = new Thread(mainControllerTask);
+        th.setDaemon(true);
+        th.start();
     }
 }
