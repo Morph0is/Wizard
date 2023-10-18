@@ -71,11 +71,13 @@
                <font>
                   <Font size="18.0" />
                </font></MFXButton>
-            <MFXCheckbox mnemonicParsing="false" text="Männlich" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <MFXCheckbox layoutX="410.0" layoutY="409.0" mnemonicParsing="false" text="Weiblich" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+            <CheckBox mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <CheckBox layoutX="410.0" layoutY="414.0" mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                <GridPane.margin>
-                  <Insets right="200.0" />
-               </GridPane.margin></MFXCheckbox>
+                  <Insets right="230.0" />
+               </GridPane.margin>
+            </CheckBox>
+            <MFXCheckbox mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

@@ -82,9 +82,10 @@ public class WizardController {
         ahvNummberField.textProperty().bindBidirectional(wizardModel.ahvNumberProperty());
         regionField.textProperty().bindBidirectional(wizardModel.regionProperty());
         childrenField.textProperty().bindBidirectional(wizardModel.childrenFieldProperty());
-        malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
+       // malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
         //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
+
     }
 
     public void onActionsubmitBtn(ActionEvent event) {

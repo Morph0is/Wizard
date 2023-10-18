@@ -8,11 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class MainApp extends Application {
 
     private static MainController mainController;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(StaticViews.StartView));
@@ -23,13 +23,19 @@ public class MainApp extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
+
+        try {
+            Parent initialContent = FXMLLoader.load(getClass().getResource(StaticViews.SplashView));
+            mainController.loadInitialContent(initialContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
-
 
     public static void switchToView(String viewName) {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource(viewName));
