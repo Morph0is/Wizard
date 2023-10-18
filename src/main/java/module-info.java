@@ -7,4 +7,5 @@ module com.example.wizard {
 
     opens com.example.wizard.controller to javafx.fxml;
     opens com.example.wizard to javafx.graphics;
+    opens com.example.wizard.model to javafx.base;
 }

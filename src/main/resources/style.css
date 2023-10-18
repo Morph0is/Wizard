@@ -1,9 +1,9 @@
 .mfx-button {
     -fx-pref-width: 180px;
-    -fx-pref-height: 35px;
-    -fx-text-fill: #333333;
-    -fx-background-color: linear-gradient(to right, rgba(66, 234, 121, 1.0), rgba(56, 250, 215, 1.0));
+    -fx-pref-height: 40px;
+    -fx-text-fill: #262626;
 
+    -fx-background-color: linear-gradient(to right, rgba(66, 234, 121, 1.0), rgba(56, 250, 215, 1.0));
 }
 
 .mfx-button:hover {
@@ -13,8 +13,8 @@
 
 .sidebar {
     -fx-background-color: linear-gradient(to top, #6B0BC0 0%, #8b0bcc 100%);
-    -fx-border-radius: 0px 20px 20px 0px;
-    -fx-background-radius: 0px 20px 20px 0px;
+    -fx-border-radius: 0px 30px 30px 0px;
+    -fx-background-radius: 0px 30px 30px 0px;
     -fx-effect: dropshadow(gaussian, rgba(139, 11, 204, 0.3), 50, 0.2, 5, 10);
 }
 
@@ -22,10 +22,103 @@
 .card {
     -fx-background-color: #f4f4f4;
     -fx-effect: dropshadow(Gaussian, rgba(0, 0, 0, 0.2), 50, 0.2, 5, 10);
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
 }
 
+
+.table-view {
+    -fx-background-color: transparent;
+
+}
+
+
+.table-view:focused {
+    -fx-border-insets: 0;
+    -fx-border-width: 0;
+    -fx-box-border: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #8a0bcc;
+    -fx-background-insets: 0 0 0 0;
+}
+    .table-view .column-header .label{
+        -fx-background-color: #8a0bcc;
+        -fx-text-fill: white;
+    }
+
+
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 50px;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-color: transparent;
+
+}
+
+/* Stil für alle Scrollbars */
+.scroll-bar {
+    -fx-background-color: #fefefe;
+}
+
+/* Stil für das Scrollbar-Rad */
+.scroll-bar .thumb {
+    -fx-background-color: #8a0bcc;
+    -fx-background-radius: 10;
+}
+
+/* Stil für den Scrollbar-Track */
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Stil für den Scrollbar-Track, wenn er fokussiert ist */
+.scroll-bar .track-focused {
+    -fx-background-color: transparent;
+}
+
+/* Stil für die Scrollbar-Pfeile */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color:#ffffff;
+}
+
+/* Ändert die Farbe der Zellenrahmen der ausgewählten Zeile */
+.table-view .table-row-cell:selected .table-cell {
+    -fx-border-color: #8a0bcc;
+}
+/* Ändert die Textfarbe der ausgewählten Zeile */
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #ffffff;
+}
+
+/* Ändert die Hintergrundfarbe der ausgewählten Zeile */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #8a0bcc;
+}
+
+/* Allgemeine Stilregeln für CheckBox */
+
+
+/* Stilregeln für das Kästchen der CheckBox, wenn nicht ausgewählt */
+.check-box .box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #262626;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+/* Stilregeln für das Kästchen der CheckBox, wenn ausgewählt */
+.check-box:selected .box {
+    -fx-background-color: #8a0bcc;
+}
+
+/* Stilregeln für den Haken der CheckBox */
+.check-box:selected .mark {
+    -fx-background-color: #FFFFFF;
+}
 
 
 

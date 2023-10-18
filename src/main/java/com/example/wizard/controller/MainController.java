@@ -36,6 +36,7 @@ public class MainController {
     }
 
     public void OnActionShowPersons(ActionEvent actionEvent) {
+        switchToView(StaticViews.listviewPersons);
     }
     public void OnActionReturnBtn(ActionEvent actionEvent) {
         switchToView(StaticViews.StartView);

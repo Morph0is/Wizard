@@ -21,19 +21,27 @@ public class DatabaseHandler {
     /**
      * Konstruktor der Klasse. Stellt eine Verbindung zur Datenbank her.
      */
-    public DatabaseHandler() {
+    static {
         try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to load MySQL Driver");
         }
     }
 
     /**
-     * Holt alle Datensätze aus der "wizard"-Tabelle und gibt sie als ResultSet zurück.
-     *
-     * @return ResultSet der Datensätze aus der "wizard"-Tabelle.
+     * Stellt eine Verbindung zur Datenbank her und gibt diese zurück.
+     * @return Connection-Objekt für die Datenbank
+     * @throws SQLException wenn die Verbindung fehlschlägt
      */
+    public Connection getConnection() throws SQLException {
+        if (conn == null || conn.isClosed()) {
+            conn = DriverManager.getConnection(url, user, password);
+        }
+        return conn;
+    }
+
     public ResultSet getWizards() {
         try {
             Statement stmt = conn.createStatement();

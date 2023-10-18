@@ -15,8 +15,24 @@ public class WizardModel {
     private StringProperty ahvNumberField;
     private StringProperty regionField;
     private StringProperty childrenField;
+    private boolean isFemale;
+    private boolean isMale;
 
-    private StringProperty maleCheckField;
+    public boolean isFemale() {
+        return isFemale;
+    }
+
+    public  void setFemale(boolean female) {
+        isFemale = female;
+    }
+
+    public boolean isMale() {
+        return isMale;
+    }
+
+    public  void setMale(boolean male) {
+        isMale = male;
+    }
 
     private StringProperty messageLabelField;
 
@@ -41,7 +57,8 @@ public class WizardModel {
         this.ahvNumberField = new SimpleStringProperty();
         this.regionField = new SimpleStringProperty();
         this.childrenField = new SimpleStringProperty();
-        this.maleCheckField = new SimpleStringProperty();
+
+
     }
 
     //Getter und Setter
@@ -117,17 +134,7 @@ public class WizardModel {
         this.childrenField.set(childrenField);
     }
 
-    public String getMaleCheckField() {
-        return maleCheckField.get();
-    }
 
-    public StringProperty maleCheckFieldProperty() {
-        return maleCheckField;
-    }
-
-    public void setMaleCheckField(String maleCheckField) {
-        this.maleCheckField.set(maleCheckField);
-    }
 
     @Override
     public String toString() {
@@ -138,7 +145,6 @@ public class WizardModel {
                 ", ahvNumberField=" + ahvNumberField +
                 ", regionField=" + regionField +
                 ", childrenField=" + childrenField +
-                ", maleCheField=" + maleCheckField +
                 '}';
     }
 }

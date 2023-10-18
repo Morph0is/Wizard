@@ -16,6 +16,8 @@ import javafx.util.Duration;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static com.example.wizard.MainApp.switchToView;
 //import java.text.ParseException;
@@ -53,15 +55,16 @@ public class WizardController {
     @FXML
     private TextField childrenField;
     @FXML
-    private TextField malecheckField;
+    private CheckBox maleCheckBox;
     @FXML
-    private CheckBox femaleCheckbox;
+    private CheckBox femaleCheckBox;
     @FXML
     private Label messageLabel;
     @FXML
     private Button deleteButton;
     @FXML
     private Button editButton;
+
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -82,10 +85,21 @@ public class WizardController {
         ahvNummberField.textProperty().bindBidirectional(wizardModel.ahvNumberProperty());
         regionField.textProperty().bindBidirectional(wizardModel.regionProperty());
         childrenField.textProperty().bindBidirectional(wizardModel.childrenFieldProperty());
-        malecheckField.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
-        //messageLabel.textProperty().bindBidirectional(wizardModel.maleCheckFieldProperty());
-        //messageLabel.textProperty().bind(wizardModel.messageLabelFieldProperty());
+
+
+        femaleCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                maleCheckBox.setSelected(false);
+            }
+        });
+
+        maleCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                femaleCheckBox.setSelected(false);
+            }
+        });
     }
+
 
     public void onActionsubmitBtn(ActionEvent event) {
         String firstName = wizardModel.getFirstnameField();
@@ -94,24 +108,25 @@ public class WizardController {
         String ahvNumber = wizardModel.getAhvNumber();
         String region = wizardModel.getRegion();
         String children = wizardModel.getChildrenField();
-        String malecheck = wizardModel.getMaleCheckField();
+
 
         if (firstName == null || firstName.isEmpty() ||
                 lastName == null || lastName.isEmpty() ||
                 birthday == null || birthday.isEmpty() ||
                 ahvNumber == null || ahvNumber.isEmpty() ||
                 region == null || region.isEmpty() ||
-                children == null || children.isEmpty() ||
-                malecheck == null || malecheck.isEmpty()) {
+                children == null || children.isEmpty()) {
             messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
 
         } else {
             try {
-                Date.valueOf(birthday);
-            } catch (IllegalArgumentException e) {
-                messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'yyyy-mm-dd'.", Colors.RED);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                simpleDateFormat.parse(birthday);
+            } catch (ParseException e) {
+                messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'dd.MM.yyyy'.", Colors.RED);
                 return;
             }
+
 
             insertPerson();
             messageService("Anmeldung erfolgreich!", Colors.GREEN);
@@ -125,31 +140,30 @@ public class WizardController {
     public void insertPerson() {
 
         try {
-            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.EINFUEGEN.getQuery());
+            PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.EINFUEGEN.getQuery());
             preparedStatement.setString(1, secondNameField.getText());
             preparedStatement.setString(2, firstNameField.getText());
 
-            /*
-            //Datum wird formatiert und dann übergeben
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date parseDate = simpleDateFormat.parse( "1980-02-23");
-            java.sql.Date sqlDate = new java.sql.Date(parseDate.getTime());
-            preparedStatement.setDate(3, sqlDate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            try {
+                java.util.Date parseDate = simpleDateFormat.parse(birthdayField.getText());
+                java.sql.Date sqlDate = new java.sql.Date(parseDate.getTime());
+                preparedStatement.setDate(3, sqlDate);
+            } catch (ParseException e) {
+                messageService("Das Datum muss in dd.mm.yyyy Format eingegeben werden.", Colors.GREEN);
+                System.out.println("Das Datum ist im falschen Format: " + e.getMessage());
+                return;
+            }
 
-             */
-
-
-            //zweite Variante um Datum zu übergeben
-            Date sqlDate = Date.valueOf(birthdayField.getText());  //Format = "yyyy-mm-dd"
-            preparedStatement.setDate(3, sqlDate);
             preparedStatement.setString(4, ahvNummberField.getText());
             preparedStatement.setString(5, regionField.getText());
             String childrenFieldString = childrenField.getText();  // angenommen, dass childrenField ein String ist
             int childrenFieldInt = Integer.parseInt(childrenFieldString);
             preparedStatement.setInt(6, childrenFieldInt);
 
-            boolean maleCheckFieldBoolean = Boolean.parseBoolean(malecheckField.getText());
-            preparedStatement.setBoolean(7, maleCheckFieldBoolean);
+            boolean gender = maleCheckBox.isSelected(); // true für männlich, false für weiblich
+            preparedStatement.setBoolean(7, gender);
+
 
 
             //Ausführung des Statements.
@@ -181,8 +195,8 @@ public class WizardController {
             String childrenFieldString = childrenField.getText();
             int childrenFieldInt = Integer.parseInt(childrenFieldString);
             preparedStatement.setInt(6, childrenFieldInt);
-            boolean maleCheckFieldBoolean = Boolean.parseBoolean(malecheckField.getText());
-            preparedStatement.setBoolean(7, maleCheckFieldBoolean);
+            boolean gender = maleCheckBox.isSelected(); // true für männlich, false für weiblich
+            preparedStatement.setBoolean(7, gender);
             preparedStatement.setInt(8, personID); // Annahme: personID ist die eindeutige ID des zu bearbeitenden Datensatzes
 
             int rowsUpdated = preparedStatement.executeUpdate();
