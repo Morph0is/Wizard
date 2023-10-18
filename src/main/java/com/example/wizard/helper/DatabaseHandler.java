@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler {
@@ -50,6 +51,7 @@ public class DatabaseHandler {
      * @return
      */
     public List<String> showWizards() {
+        List<String> wizardList = new ArrayList<>();
         ResultSet result = getWizards();
         if (result != null) {
             try {
@@ -69,7 +71,7 @@ public class DatabaseHandler {
                 e.printStackTrace();
             }
         }
-        return null;
+        return wizardList;
     }
 }
 
