@@ -8,6 +8,7 @@ import com.example.wizard.model.Person;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -85,49 +86,52 @@ public class TableController {
 
     @FXML
     private void loadData() {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        Connection conn = null;
-        try {
-            conn = databaseHandler.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Task<ObservableList<Person>> task = new Task<ObservableList<Person>>() {
+            @Override
+            protected ObservableList<Person> call() throws Exception {
+                DatabaseHandler databaseHandler = new DatabaseHandler();
+                Connection conn = databaseHandler.getConnection();
 
-        String query = SqlStatement.SELECT_ALL.getQuery();
-        ObservableList<Person> data = FXCollections.observableArrayList();
+                String query = SqlStatement.SELECT_ALL.getQuery();
+                ObservableList<Person> data = FXCollections.observableArrayList();
 
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+                try (Statement statement = conn.createStatement();
+                     ResultSet resultSet = statement.executeQuery(query)) {
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String vorname = resultSet.getString("vorname");
-                String gebDatum = resultSet.getString("geburtsdatum");
-                String ahvNr = resultSet.getString("ahvNr");
-                String region = resultSet.getString("region");
-                int kinder = resultSet.getInt("kinder");
-                String geschlecht = resultSet.getString("geschlecht");
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String vorname = resultSet.getString("vorname");
+                        String gebDatum = resultSet.getString("geburtsdatum");
+                        String ahvNr = resultSet.getString("ahvNr");
+                        String region = resultSet.getString("region");
+                        int kinder = resultSet.getInt("kinder");
+                        String geschlecht = resultSet.getString("geschlecht");
 
-                Person person = new Person(id, name, vorname, gebDatum, ahvNr, region, kinder, geschlecht);
-                data.add(person);
+                        Person person = new Person(id, name, vorname, gebDatum, ahvNr, region, kinder, geschlecht);
+                        data.add(person);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return data;
             }
+        };
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        task.setOnSucceeded(e -> {
+            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            vornameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));
+            gebDatumCol.setCellValueFactory(new PropertyValueFactory<>("gebDatum"));
+            ahvnrCol.setCellValueFactory(new PropertyValueFactory<>("ahvNr"));
+            regionCol.setCellValueFactory(new PropertyValueFactory<>("region"));
+            kinderCol.setCellValueFactory(new PropertyValueFactory<>("kinder"));
+            geschlechtCol.setCellValueFactory(new PropertyValueFactory<>("geschlecht"));
 
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        vornameCol.setCellValueFactory(new PropertyValueFactory<>("vorname"));
-        gebDatumCol.setCellValueFactory(new PropertyValueFactory<>("gebDatum"));
-        ahvnrCol.setCellValueFactory(new PropertyValueFactory<>("ahvNr"));
-        regionCol.setCellValueFactory(new PropertyValueFactory<>("region"));
-        kinderCol.setCellValueFactory(new PropertyValueFactory<>("kinder"));
-        geschlechtCol.setCellValueFactory(new PropertyValueFactory<>("geschlecht"));
+            tableView.setItems(task.getValue());
+        });
 
-        tableView.setItems(data); // Setzen der Daten für die TableView
+        new Thread(task).start();
     }
 
 
