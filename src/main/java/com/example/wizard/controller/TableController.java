@@ -1,6 +1,7 @@
 package com.example.wizard.controller;
 
 import com.example.wizard.StaticViews;
+import com.example.wizard.helper.Colors;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
 import com.example.wizard.model.Person;
@@ -27,6 +28,7 @@ import static com.example.wizard.MainApp.switchToView;
 
 public class TableController {
 
+
     @FXML
     private MFXButton deleteBtn;
     @FXML
@@ -51,6 +53,8 @@ public class TableController {
     private TableColumn<Person, String> kinderCol;
     @FXML
     private TableColumn<Person, String> geschlechtCol;
+    @FXML
+    private Label getMessageLabel;
 
 
 
@@ -72,7 +76,8 @@ public class TableController {
             switchToView(StaticViews.WizardView);
             loadData();
         } else {
-            messageLabel.setText("Keine Person ausgewählt.");
+            messageService("Bitte wähle zuerst eine Person aus.", Colors.RED);
+
         }
     }
 
@@ -141,7 +146,10 @@ public class TableController {
 
         new Thread(task).start();
     }
-
+    public void messageService(String message, Colors color) {
+        messageLabel.setText(message);
+        messageLabel.setStyle(color.c);
+    }
 
 }
 

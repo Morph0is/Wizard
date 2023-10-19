@@ -44,11 +44,6 @@
                <Font name="Arial Nova" size="18.0" />
             </font>
          </MFXButton>
-         <MFXButton buttonType="RAISED" depthLevel="LEVEL5" layoutX="30.0" layoutY="343.0" rippleAnimateShadow="true" rippleColor="#780dd7" rippleRadius="20.0" rippleRadiusMultiplier="5.0" style="-fx-text-fill: #ffffff; -fx-background-radius: 30; -fx-border-radius: 30;" styleClass="mfx-button" stylesheets="@style.css" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-            <font>
-               <Font name="Arial Nova" size="18.0" />
-            </font>
-         </MFXButton>
          <MFXButton buttonType="RAISED" depthLevel="LEVEL5" layoutX="30.0" layoutY="343.0" onAction="#OnActionShowPersons" rippleAnimateShadow="true" rippleColor="#780dd7" rippleRadius="20.0" rippleRadiusMultiplier="5.0" style="-fx-text-fill: #ffffff; -fx-background-radius: 30; -fx-border-radius: 30;" styleClass="mfx-button" stylesheets="@style.css" text="Liste Personen" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <font>
                <Font name="Arial Nova" size="18.0" />

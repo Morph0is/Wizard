@@ -33,7 +33,10 @@
             <Font size="18.0" />
          </font>
       </MFXButton>
-      <Label fx:id="messageLabel" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label fx:id="messageLabel" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font></Label>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #8a0bcc; -fx-background-radius: 30 30 0 0; -fx-border-radius: 30 30  0 0;" GridPane.columnSpan="2" />
       <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="799.0" stylesheets="@style.css" translateY="-70.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <columns>
