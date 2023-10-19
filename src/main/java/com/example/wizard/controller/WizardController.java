@@ -4,6 +4,7 @@ import com.example.wizard.StaticViews;
 import com.example.wizard.helper.Colors;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
+import com.example.wizard.model.Person;
 import com.example.wizard.model.WizardModel;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -64,7 +65,7 @@ public class WizardController {
     private Button deleteButton;
     @FXML
     private Button editButton;
-
+    private static Person selectedPerson;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -98,7 +99,46 @@ public class WizardController {
                 femaleCheckBox.setSelected(false);
             }
         });
+        loadSelectedPersonData();
+        formatBirthdayField();
     }
+
+    public static void setSelectedPerson(Person person) {
+        selectedPerson = person;
+    }
+
+    public void loadSelectedPersonData() {
+        if (selectedPerson != null) {
+            secondNameField.setText(selectedPerson.getName());
+            firstNameField.setText(selectedPerson.getVorname());
+            birthdayField.setText(selectedPerson.getGebDatum());
+            ahvNummberField.setText(selectedPerson.getAhvNr());
+            regionField.setText(selectedPerson.getRegion());
+            childrenField.setText(String.valueOf(selectedPerson.getKinder()));
+
+            if ("männlich".equals(selectedPerson.getGeschlecht())) {
+                maleCheckBox.setSelected(true);
+            } else {
+                femaleCheckBox.setSelected(true);
+            }
+        }
+    }
+
+    public void formatBirthdayField() {
+        String unformattedDate = birthdayField.getText();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Format von java.sql.Date
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd.MM.yyyy"); // Gewünschtes Format
+
+        try {
+            java.util.Date date = simpleDateFormat.parse(unformattedDate);
+            String formattedDate = targetFormat.format(date);
+            birthdayField.setText(formattedDate);
+        } catch (ParseException e) {
+            System.out.println("Fehler beim Parsen des Datums: " + e.getMessage());
+        }
+    }
+
+
 
 
     public void onActionsubmitBtn(ActionEvent event) {

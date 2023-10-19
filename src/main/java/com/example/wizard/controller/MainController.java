@@ -15,7 +15,7 @@ import static com.example.wizard.MainApp.switchToView;
 
 public class MainController {
     @FXML
-    private AnchorPane content; // Angenommen, das ist Ihr 'content' Bereich
+    private AnchorPane content;
 
     public void loadInitialContent(Parent initialContent) {
         content.getChildren().clear();

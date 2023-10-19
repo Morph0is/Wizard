@@ -4,6 +4,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="799.0" style="-fx-background-color: #fefefe; -fx-background-radius: 30px; -fx-border-radius: 30px;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.wizard.controller.TableController">
   <columnConstraints>
@@ -16,15 +17,21 @@
     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <MFXButton fx:id="deleteBtn" onAction="#onActionDeleteBtn" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Löschen" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <MFXButton fx:id="deleteBtn" onAction="#onActionDeleteBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-effect: dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10); -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Löschen" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="20.0" right="20.0" />
          </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
       </MFXButton>
-      <MFXButton fx:id="editBtn" layoutX="10.0" layoutY="447.0" onAction="#onActonEditBtn" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="mfx-button" stylesheets="@style.css" text="Bearbeiten" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <MFXButton fx:id="editBtn" layoutX="10.0" layoutY="447.0" onAction="#onActonEditBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-effect: dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10); -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Bearbeiten" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="20.0" right="20.0" />
          </GridPane.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
       </MFXButton>
       <Label fx:id="messageLabel" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #8a0bcc; -fx-background-radius: 30 30 0 0; -fx-border-radius: 30 30  0 0;" GridPane.columnSpan="2" />

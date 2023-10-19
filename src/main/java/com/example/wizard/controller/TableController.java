@@ -65,23 +65,17 @@ public class TableController {
     }
 
     public void onActonEditBtn(ActionEvent actionEvent) {
-            Person selectedPerson = tableView.getSelectionModel().getSelectedItem();
-            if (selectedPerson != null) {
-                switchToView(StaticViews.WizardView);
-
-                // Nach der Bearbeitung der Person aktualisieren Sie die Datenbank.
-                updateDatabase(selectedPerson);
-
-                // Und dann laden Sie die Daten neu, um die Änderungen im TableView anzuzeigen.
-                loadData();
-            } else {
-                messageLabel.setText("Keine Person ausgewählt.");
-            }
+        Person selectedPerson = tableView.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            WizardController.setSelectedPerson(selectedPerson); // Übergeben der ausgewählten Person
+            switchToView(StaticViews.WizardView);
+            loadData();
+        } else {
+            messageLabel.setText("Keine Person ausgewählt.");
         }
-
-        private void updateDatabase(Person person) {
-            // Implementieren Sie die Logik zum Aktualisieren des Datensatzes in der Datenbank.
     }
+
+
 
     @FXML
     private void loadData() {

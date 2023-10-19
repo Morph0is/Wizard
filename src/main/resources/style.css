@@ -8,6 +8,7 @@
 
 .mfx-button:hover {
     -fx-background-color: linear-gradient(to right, rgb(249, 112, 157), rgb(255, 226, 64));
+
 }
 
 
@@ -120,7 +121,13 @@
     -fx-background-color: #FFFFFF;
 }
 
-
+.my-background {
+    -fx-background-image: url("/WizardLogo3.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-shape: "M0 30 C0 13.5 13.5 0 30 0 L690 0 C706.5 0 720 13.5 720 30 L720 360 C720 376.5 706.5 390 690 390 L30 390 C13.5 390 0 376.5 0 360 Z";
+}
 
 
 
