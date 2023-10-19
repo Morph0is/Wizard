@@ -5,8 +5,6 @@ import com.example.wizard.helper.Colors;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
 import com.example.wizard.model.Person;
-import com.example.wizard.model.Person;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -18,18 +16,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
 import java.sql.*;
-import java.util.ResourceBundle;
 import static com.example.wizard.MainApp.switchToView;
 
 public class TableController {
 
-
-    @FXML
-    private MFXButton deleteBtn;
-    @FXML
-    private MFXButton editBtn;
     @FXML
     private Label messageLabel;
     @FXML
@@ -50,10 +41,6 @@ public class TableController {
     private TableColumn<Person, String> kinderCol;
     @FXML
     private TableColumn<Person, String> geschlechtCol;
-    @FXML
-    private Label getMessageLabel;
-
-
 
 
     @FXML
