@@ -12,6 +12,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -77,6 +78,7 @@ public class TableController {
 
 
 
+
     @FXML
     private void loadData() {
         Task<ObservableList<Person>> task = new Task<ObservableList<Person>>() {
@@ -120,6 +122,19 @@ public class TableController {
             regionCol.setCellValueFactory(new PropertyValueFactory<>("region"));
             kinderCol.setCellValueFactory(new PropertyValueFactory<>("kinder"));
             geschlechtCol.setCellValueFactory(new PropertyValueFactory<>("geschlecht"));
+            geschlechtCol.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        // Ändern Sie den Wert je nachdem, ob er 0 oder 1 ist
+                        setText("1".equals(item) ? "Männlich" : "Weiblich");
+                    }
+                }
+            });
 
             tableView.setItems(task.getValue());
         });

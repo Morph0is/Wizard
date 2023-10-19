@@ -13,6 +13,20 @@ public class Person {
     private int kinder;
     private String geschlecht;
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", vorname='" + vorname + '\'' +
+                ", gebDatum='" + gebDatum + '\'' +
+                ", ahvNr='" + ahvNr + '\'' +
+                ", region='" + region + '\'' +
+                ", kinder=" + kinder +
+                ", geschlecht='" + geschlecht + '\'' +
+                '}';
+    }
+
     public Person(int id, String name, String vorname, String gebDatum, String ahvNr, String region, int kinder, String geschlecht) {
         this.id = id;
         this.name = name;

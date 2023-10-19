@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 
 import static com.example.wizard.MainApp.switchToView;
 
+
 public class MainController {
     @FXML
     private AnchorPane content;
@@ -28,10 +29,11 @@ public class MainController {
     }
 
 
-
+    WizardController wizardController = new WizardController();
 
 
     public void OnActionNeuPersonBtn(ActionEvent actionEvent) {
+        wizardController.selectedPerson = null;
         switchToView(StaticViews.WizardView);
     }
 
@@ -44,6 +46,7 @@ public class MainController {
     }
 
     public void OnActionBackbtn(ActionEvent actionEvent) {
+        wizardController.selectedPerson = null;
         switchToView(StaticViews.SplashView);
     }
 }

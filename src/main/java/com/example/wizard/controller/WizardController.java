@@ -14,6 +14,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -61,11 +63,13 @@ public class WizardController {
     private CheckBox femaleCheckBox;
     @FXML
     private Label messageLabel;
+
     @FXML
     private Button deleteButton;
     @FXML
     private Button editButton;
-    private static Person selectedPerson;
+    private int selectedPersonId;
+    public static Person selectedPerson;
 
     WizardModel wizardModel = new WizardModel();
     DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -99,9 +103,87 @@ public class WizardController {
                 femaleCheckBox.setSelected(false);
             }
         });
-        loadSelectedPersonData();
-        formatBirthdayField();
+
+
+
+        loadSelectData();
     }
+
+    private void clearMask() {
+        firstNameField.clear();
+        secondNameField.clear();
+        birthdayField.clear();
+        ahvNummberField.clear();
+        regionField.clear();
+        childrenField.clear();
+        femaleCheckBox.setSelected(false);
+    }
+
+    //Dient zur verhinderung das die Daten in der Eingabemaske geladen werden, wenn selectedPerson null ist.
+    private void loadSelectData() {
+        if (selectedPerson != null) {
+            loadSelectedPersonData();
+            formatBirthdayField();
+        } else
+        {
+            clearMask();
+        }
+    }
+
+
+    public static Person getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    public void updateSelectedPerson() {
+        try {
+            String query = "UPDATE wizard SET name = ?, vorname = ?, geburtsdatum = ?, ahvnr = ?, region = ?, kinder = ?, geschlecht = ? WHERE id = ?";
+            PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(query);
+
+            preparedStatement.setString(1, secondNameField.getText());
+            preparedStatement.setString(2, firstNameField.getText());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            try {
+                java.util.Date parseDate = simpleDateFormat.parse(birthdayField.getText());
+                java.sql.Date sqlDate = new java.sql.Date(parseDate.getTime());
+                preparedStatement.setDate(3, sqlDate);
+            } catch (ParseException e) {
+                messageService("Das Datum muss im Format dd.mm.yyyy eingegeben werden.", Colors.GREEN);
+                System.out.println("Das Datum ist im falschen Format: " + e.getMessage());
+                return;
+            }
+
+            preparedStatement.setString(4, ahvNummberField.getText());
+            preparedStatement.setString(5, regionField.getText());
+
+            String childrenFieldString = childrenField.getText();
+            int childrenFieldInt = Integer.parseInt(childrenFieldString);
+            preparedStatement.setInt(6, childrenFieldInt);
+
+
+
+            boolean gender = maleCheckBox.isSelected(); // true für männlich, false für weiblich
+            preparedStatement.setBoolean(7, gender);
+
+            preparedStatement.setInt(8, selectedPerson.getId()); // Angenommen, dass `selectedPerson` das entsprechende Person-Objekt ist
+
+            // Ausführung des Updates
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Person erfolgreich aktualisiert!");
+                messageService("Person erfolgreich aktualisiert!", Colors.GREEN);
+                // Verzögerung
+                PauseTransition pause = new PauseTransition(Duration.seconds(2.5));
+                pause.setOnFinished(e -> switchToView(StaticViews.WizardView));
+                pause.play();
+            }
+        } catch (SQLException e) {
+            System.out.println("Fehler! Da ist etwas schiefgelaufen: " + e.getMessage());
+        }
+    }
+
+
 
     public static void setSelectedPerson(Person person) {
         selectedPerson = person;
@@ -109,6 +191,8 @@ public class WizardController {
 
     public void loadSelectedPersonData() {
         if (selectedPerson != null) {
+            selectedPersonId = selectedPerson.getId();
+
             secondNameField.setText(selectedPerson.getName());
             firstNameField.setText(selectedPerson.getVorname());
             birthdayField.setText(selectedPerson.getGebDatum());
@@ -122,6 +206,7 @@ public class WizardController {
                 femaleCheckBox.setSelected(true);
             }
         }
+
     }
 
     public void formatBirthdayField() {
@@ -139,9 +224,48 @@ public class WizardController {
     }
 
 
+private void submitInsert() {
+    String firstName = wizardModel.getFirstnameField();
+    String lastName = wizardModel.getLastNameField();
+    String birthday = wizardModel.getBirthDay();
+    String ahvNumber = wizardModel.getAhvNumber();
+    String region = wizardModel.getRegion();
+    String children = wizardModel.getChildrenField();
 
+    String input = children; // Angenommen, 'someTextField' ist das Eingabefeld
+    try {
+        int value = Integer.parseInt(input);
+        // Führe den Code für gültige Integer-Werte aus
+    } catch (NumberFormatException e) {
+        System.out.println("Bitte geben Sie eine gültige Ganzzahl ein.");
+        messageService("Bitte nur Ganzzahlen eingeben", Colors.RED);
+        return;
+    }
 
-    public void onActionsubmitBtn(ActionEvent event) {
+    if (firstName == null || firstName.isEmpty() ||
+            lastName == null || lastName.isEmpty() ||
+            birthday == null || birthday.isEmpty() ||
+            ahvNumber == null || ahvNumber.isEmpty() ||
+            region == null || region.isEmpty() ||
+            children == null || children.isEmpty()) {
+        messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
+
+    } else {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            simpleDateFormat.parse(birthday);
+        } catch (ParseException e) {
+            messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'dd.MM.yyyy'.", Colors.RED);
+            return;
+        }
+
+        insertPerson();
+        messageService("Anmeldung erfolgreich!", Colors.GREEN);
+    }
+
+}
+
+    private void submitInsertUpdate() {
         String firstName = wizardModel.getFirstnameField();
         String lastName = wizardModel.getLastNameField();
         String birthday = wizardModel.getBirthDay();
@@ -149,6 +273,15 @@ public class WizardController {
         String region = wizardModel.getRegion();
         String children = wizardModel.getChildrenField();
 
+        String input = children; // Angenommen, 'someTextField' ist das Eingabefeld
+        try {
+            int value = Integer.parseInt(input);
+            // Führe den Code für gültige Integer-Werte aus
+        } catch (NumberFormatException e) {
+            System.out.println("Bitte geben Sie eine gültige Ganzzahl ein.");
+            messageService("Bitte nur Ganzzahlen eingeben", Colors.RED);
+            return;
+        }
 
         if (firstName == null || firstName.isEmpty() ||
                 lastName == null || lastName.isEmpty() ||
@@ -166,11 +299,19 @@ public class WizardController {
                 messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'dd.MM.yyyy'.", Colors.RED);
                 return;
             }
-
-
-            insertPerson();
-            messageService("Anmeldung erfolgreich!", Colors.GREEN);
+                updateSelectedPerson();
         }
+
+    }
+
+    public void onActionsubmitBtn(ActionEvent event) {
+
+            if (selectedPerson != null) {
+                submitInsertUpdate();
+            } else {
+                submitInsert();
+            }
+
     }
 
 
