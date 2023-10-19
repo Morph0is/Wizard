@@ -19,10 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ResourceBundle;
 import static com.example.wizard.MainApp.switchToView;
 
@@ -67,6 +64,27 @@ public class TableController {
     }
 
     public void onActionDeleteBtn(ActionEvent actionEvent) {
+        Person selectedPerson = tableView.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            try {
+                int id = selectedPerson.getId();
+                DatabaseHandler databaseHandler = new DatabaseHandler();
+                PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.LOESCHEN.getQuery());
+                preparedStatement.setInt(1, id); // Annahme: personID ist die eindeutige ID des zu löschenden Datensatzes
+
+                int rowsDeleted = preparedStatement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("Datensatz erfolgreich gelöscht.");
+                }
+                preparedStatement.execute();
+                tableView.getItems().remove(selectedPerson);
+                tableView.refresh();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            messageLabel.setText("Keine Person ausgewählt.");
+        }
     }
 
     public void onActonEditBtn(ActionEvent actionEvent) {
