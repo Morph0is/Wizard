@@ -23,7 +23,7 @@ public class MainApp extends Application {
         stage.setTitle("WIZARD");
         stage.setResizable(false);
         stage.setScene(scene);
-        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/images/wizardLogo.png")));
+        stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/images/Logo3.png")));
         stage.show();
 
 

@@ -34,7 +34,6 @@ public class TableController {
     private Label messageLabel;
     @FXML
     private TableView<Person> tableView;
-
     @FXML
     private TableColumn<Person, String> idCol;
     @FXML
