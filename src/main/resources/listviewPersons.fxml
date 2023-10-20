@@ -40,14 +40,14 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #8a0bcc; -fx-background-radius: 30 30 0 0; -fx-border-radius: 30 30  0 0;" GridPane.columnSpan="2" />
       <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="799.0" stylesheets="@style.css" translateY="-70.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <columns>
-          <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="vornameCol" prefWidth="75.0" text="Vorname" />
-          <TableColumn fx:id="gebDatumCol" prefWidth="75.0" text="Geb-Datum" />
-          <TableColumn fx:id="ahvnrCol" prefWidth="75.0" text="AHVNR" />
-          <TableColumn fx:id="regionCol" prefWidth="75.0" text="Region" />
-          <TableColumn fx:id="kinderCol" prefWidth="75.0" text="Kinder" />
-          <TableColumn fx:id="geschlechtCol" prefWidth="75.0" text="Geschlecht" />
+          <TableColumn fx:id="idCol" prefWidth="54.0" text="ID" />
+          <TableColumn fx:id="nameCol" prefWidth="122.0" text="Name" />
+          <TableColumn fx:id="vornameCol" prefWidth="89.0" text="Vorname" />
+          <TableColumn fx:id="gebDatumCol" prefWidth="114.0" text="Geb-Datum" />
+          <TableColumn fx:id="ahvnrCol" prefWidth="128.0" text="AHVNR" />
+          <TableColumn fx:id="regionCol" prefWidth="128.0" text="Region" />
+          <TableColumn fx:id="kinderCol" prefWidth="62.0" text="Kinder" />
+          <TableColumn fx:id="geschlechtCol" prefWidth="101.0" text="Geschlecht" />
         </columns>
          <GridPane.margin>
             <Insets />

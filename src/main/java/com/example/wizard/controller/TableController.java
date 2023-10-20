@@ -5,6 +5,7 @@ import com.example.wizard.helper.Colors;
 import com.example.wizard.helper.DatabaseHandler;
 import com.example.wizard.helper.SqlStatement;
 import com.example.wizard.model.Person;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -15,11 +16,15 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import static com.example.wizard.MainApp.switchToView;
 
 public class TableController {
+
 
     @FXML
     private Label messageLabel;
@@ -47,7 +52,6 @@ public class TableController {
     public void initialize() {
 
         loadData();
-
     }
 
     public void onActionDeleteBtn(ActionEvent actionEvent) {
@@ -56,12 +60,13 @@ public class TableController {
             try {
                 int id = selectedPerson.getId();
                 DatabaseHandler databaseHandler = new DatabaseHandler();
-                PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.LOESCHEN.getQuery());
+                PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.DELETE.getQuery());
                 preparedStatement.setInt(1, id); // Annahme: personID ist die eindeutige ID des zu löschenden Datensatzes
 
                 int rowsDeleted = preparedStatement.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("Datensatz erfolgreich gelöscht.");
+                    System.out.println("Datensatz erfolgreich gelöscht");
+                    messageService("Datensatz erfolgreich gelöscht", Colors.GREEN);
                 }
                 preparedStatement.execute();
                 tableView.getItems().remove(selectedPerson);
@@ -86,9 +91,6 @@ public class TableController {
         }
     }
 
-
-
-
     @FXML
     private void loadData() {
         Task<ObservableList<Person>> task = new Task<ObservableList<Person>>() {
@@ -97,7 +99,7 @@ public class TableController {
                 DatabaseHandler databaseHandler = new DatabaseHandler();
                 Connection conn = databaseHandler.getConnection();
 
-                String query = SqlStatement.SELECT_ALL.getQuery();
+                String query = SqlStatement.SELECTALL.getQuery();
                 ObservableList<Person> data = FXCollections.observableArrayList();
 
                 try (Statement statement = conn.createStatement();
@@ -151,10 +153,16 @@ public class TableController {
 
         new Thread(task).start();
     }
+
     public void messageService(String message, Colors color) {
         messageLabel.setText(message);
         messageLabel.setStyle(color.c);
-    }
 
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(e -> messageLabel.setText(null));
+        pause.play();
+    }
 }
+
+
 

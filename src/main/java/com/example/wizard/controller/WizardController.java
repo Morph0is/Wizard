@@ -14,8 +14,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
-
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,8 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static com.example.wizard.MainApp.switchToView;
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
+
 
 /*
 Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
@@ -137,7 +134,7 @@ public class WizardController {
 
     public void updateSelectedPerson() {
         try {
-            String query = "UPDATE wizard SET name = ?, vorname = ?, geburtsdatum = ?, ahvnr = ?, region = ?, kinder = ?, geschlecht = ? WHERE id = ?";
+            String query = SqlStatement.UPDATE.getQuery();
             PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(query);
 
             preparedStatement.setString(1, secondNameField.getText());
@@ -184,7 +181,6 @@ public class WizardController {
     }
 
 
-
     public static void setSelectedPerson(Person person) {
         selectedPerson = person;
     }
@@ -206,7 +202,6 @@ public class WizardController {
                 femaleCheckBox.setSelected(true);
             }
         }
-
     }
 
     public void formatBirthdayField() {
@@ -224,46 +219,45 @@ public class WizardController {
     }
 
 
-private void submitInsert() {
-    String firstName = wizardModel.getFirstnameField();
-    String lastName = wizardModel.getLastNameField();
-    String birthday = wizardModel.getBirthDay();
-    String ahvNumber = wizardModel.getAhvNumber();
-    String region = wizardModel.getRegion();
-    String children = wizardModel.getChildrenField();
+    private void submitInsert() {
+        String firstName = wizardModel.getFirstnameField();
+        String lastName = wizardModel.getLastNameField();
+        String birthday = wizardModel.getBirthDay();
+        String ahvNumber = wizardModel.getAhvNumber();
+        String region = wizardModel.getRegion();
+        String children = wizardModel.getChildrenField();
 
-    String input = children; // Angenommen, 'someTextField' ist das Eingabefeld
-    try {
-        int value = Integer.parseInt(input);
-        // Führe den Code für gültige Integer-Werte aus
-    } catch (NumberFormatException e) {
-        System.out.println("Bitte geben Sie eine gültige Ganzzahl ein.");
-        messageService("Bitte nur Ganzzahlen eingeben", Colors.RED);
-        return;
-    }
+            if (firstName == null || firstName.isEmpty() ||
+                lastName == null || lastName.isEmpty() ||
+                birthday == null || birthday.isEmpty() ||
+                ahvNumber == null || ahvNumber.isEmpty() ||
+                region == null || region.isEmpty() ||
+                children == null || children.isEmpty()) {
 
-    if (firstName == null || firstName.isEmpty() ||
-            lastName == null || lastName.isEmpty() ||
-            birthday == null || birthday.isEmpty() ||
-            ahvNumber == null || ahvNumber.isEmpty() ||
-            region == null || region.isEmpty() ||
-            children == null || children.isEmpty()) {
-        messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
+            messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
+        } else {
+            // Prüfung auf Ganzzahlen, wenn alle Felder ausgefüllt sind
+            try {
+                int value = Integer.parseInt(children);
+            } catch (NumberFormatException e) {
+                messageService("Bitte nur Ganzzahlen eingeben", Colors.RED);
+                return;
+            }
 
-    } else {
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            simpleDateFormat.parse(birthday);
-        } catch (ParseException e) {
-            messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'dd.MM.yyyy'.", Colors.RED);
-            return;
+            // Prüfung des Datumsformats
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                simpleDateFormat.parse(birthday);
+            } catch (ParseException e) {
+                messageService("Ungültiges Datumsformat. Verwenden Sie das Format 'dd.MM.yyyy'.", Colors.RED);
+                return;
+            }
+
+            insertPerson();
+            messageService("Anmeldung erfolgreich!", Colors.GREEN);
         }
-
-        insertPerson();
-        messageService("Anmeldung erfolgreich!", Colors.GREEN);
     }
 
-}
 
     private void submitInsertUpdate() {
         String firstName = wizardModel.getFirstnameField();
@@ -301,7 +295,6 @@ private void submitInsert() {
             }
                 updateSelectedPerson();
         }
-
     }
 
     public void onActionsubmitBtn(ActionEvent event) {
@@ -311,7 +304,6 @@ private void submitInsert() {
             } else {
                 submitInsert();
             }
-
     }
 
 
@@ -321,7 +313,7 @@ private void submitInsert() {
     public void insertPerson() {
 
         try {
-            PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.EINFUEGEN.getQuery());
+            PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.INSERT.getQuery());
             preparedStatement.setString(1, secondNameField.getText());
             preparedStatement.setString(2, firstNameField.getText());
 
@@ -366,7 +358,7 @@ private void submitInsert() {
 
     public void editPerson(int personID) {
         try {
-            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.AKTUALISIEREN.getQuery());
+            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.UPDATE.getQuery());
             preparedStatement.setString(1, secondNameField.getText());
             preparedStatement.setString(2, firstNameField.getText());
             Date sqlDate = Date.valueOf(birthdayField.getText());
@@ -389,10 +381,9 @@ private void submitInsert() {
         }
     }
 
-
     public void deletePerson(int personID) {
         try {
-            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.LOESCHEN.getQuery());
+            PreparedStatement preparedStatement = databaseHandler.conn.prepareStatement(SqlStatement.DELETE.getQuery());
             preparedStatement.setInt(1, personID); // Annahme: personID ist die eindeutige ID des zu löschenden Datensatzes
 
             int rowsDeleted = preparedStatement.executeUpdate();

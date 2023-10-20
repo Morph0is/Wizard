@@ -8,10 +8,10 @@ public enum SqlStatement {
 
 
     //Todo: hier noch EDIT und DELETE statements erstellen. wichtig: prepared-statements verwenden.
-   SELECT_ALL("SELECT * FROM wizard"),
-   EINFUEGEN("INSERT INTO wizard (name, vorname, geburtsdatum, ahvnr, region, kinder, geschlecht) VALUES (?, ?, ?, ?, ?, ?, ?)"),
-    LOESCHEN("DELETE FROM wizard WHERE id = ?"),
-    AKTUALISIEREN("UPDATE wizard SET name = ?, vorname = ?, geburtsdatum = ?, ahvnr = ?, region = ?, kinder = ?, geschlecht = ? WHERE id = ?");
+   SELECTALL("SELECT * FROM wizard"),
+   INSERT("INSERT INTO wizard (name, vorname, geburtsdatum, ahvnr, region, kinder, geschlecht) VALUES (?, ?, ?, ?, ?, ?, ?)"),
+    DELETE("DELETE FROM wizard WHERE id = ?"),
+    UPDATE("UPDATE wizard SET name = ?, vorname = ?, geburtsdatum = ?, ahvnr = ?, region = ?, kinder = ?, geschlecht = ? WHERE id = ?");
 
    public final String query;
 
