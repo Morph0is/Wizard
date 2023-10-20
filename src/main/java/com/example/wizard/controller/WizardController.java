@@ -22,19 +22,6 @@ import java.text.SimpleDateFormat;
 
 import static com.example.wizard.MainApp.switchToView;
 
-
-/*
-Todo : In Diesem File können wir das Data-binding machen mit (Bidirectional).
- Auch werden wir hier die Eingabedaten der Maske Validieren.
- Reihenfolge ist folgender massen:
- - public class Controller implements Initializable         ###Erledigt
- - @FXML  Initialisierungen der Variablen, aus der Maske.   ###Erledigt
- - public  void initialize()                                ###Erledigt
- - Data-binding                                             ###Erledigt
- - Validierung  der Daten und  Steuerung  der Buttons       ***inPROGESS
- - Methoden DELETE und EDIT einfuegen                       ***inPROGRESS
- */
-
 /**
  * In dieser Klasse wird die View mit dem Model mit Data-binding verbunden.
  * Hier finden auch alle Validierungen statt bevor sie in die Datenbank zugelassen werden.
@@ -72,13 +59,6 @@ public class WizardController {
     DatabaseHandler databaseHandler = new DatabaseHandler();
 
 
-    /**
-     * Todo: Databinding ist erledigt.
-     *  Methoden müssen noch mit dem Databinding verbunden werden.
-     *  muss noch check box einbauen zum testen.
-     *  aktuell ist ein Test - Textfield im Einsatz.
-     */
-
     //databinding
     public void initialize() {
         firstNameField.textProperty().bindBidirectional(wizardModel.firstnameFieldProperty());
@@ -100,8 +80,6 @@ public class WizardController {
                 femaleCheckBox.setSelected(false);
             }
         });
-
-
 
         loadSelectData();
     }
@@ -128,10 +106,6 @@ public class WizardController {
     }
 
 
-    public static Person getSelectedPerson() {
-        return selectedPerson;
-    }
-
     public void updateSelectedPerson() {
         try {
             String query = SqlStatement.UPDATE.getQuery();
@@ -157,8 +131,6 @@ public class WizardController {
             String childrenFieldString = childrenField.getText();
             int childrenFieldInt = Integer.parseInt(childrenFieldString);
             preparedStatement.setInt(6, childrenFieldInt);
-
-
 
             boolean gender = maleCheckBox.isSelected(); // true für männlich, false für weiblich
             preparedStatement.setBoolean(7, gender);
@@ -227,7 +199,7 @@ public class WizardController {
         String region = wizardModel.getRegion();
         String children = wizardModel.getChildrenField();
 
-            if (firstName == null || firstName.isEmpty() ||
+        if (firstName == null || firstName.isEmpty() ||
                 lastName == null || lastName.isEmpty() ||
                 birthday == null || birthday.isEmpty() ||
                 ahvNumber == null || ahvNumber.isEmpty() ||
@@ -236,6 +208,12 @@ public class WizardController {
 
             messageService("Bitte füllen Sie alle Felder aus.", Colors.RED);
         } else {
+            // Prüfen, ob in ahvNumber nur Zahlen und Punkte enthalten sind
+            if (!ahvNumber.matches("[0-9.]+")) {
+                messageService("Die AHV-Nummer darf nur Zahlen und Punkte enthalten.", Colors.RED);
+                return;
+            }
+
             // Prüfung auf Ganzzahlen, wenn alle Felder ausgefüllt sind
             try {
                 int value = Integer.parseInt(children);
@@ -257,6 +235,7 @@ public class WizardController {
             messageService("Anmeldung erfolgreich!", Colors.GREEN);
         }
     }
+
 
 
     private void submitInsertUpdate() {

@@ -7,7 +7,7 @@ package com.example.wizard.helper;
 public enum SqlStatement {
 
 
-    //Todo: hier noch EDIT und DELETE statements erstellen. wichtig: prepared-statements verwenden.
+
    SELECTALL("SELECT * FROM wizard"),
    INSERT("INSERT INTO wizard (name, vorname, geburtsdatum, ahvnr, region, kinder, geschlecht) VALUES (?, ?, ?, ?, ?, ?, ?)"),
     DELETE("DELETE FROM wizard WHERE id = ?"),

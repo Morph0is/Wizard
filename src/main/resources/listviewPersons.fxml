@@ -17,7 +17,7 @@
     <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <MFXButton fx:id="deleteBtn" onAction="#onActionDeleteBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-effect: dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10); -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Löschen" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <MFXButton fx:id="deleteBtn" onAction="#onActionDeleteBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Löschen" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="20.0" right="20.0" />
          </GridPane.margin>
@@ -25,7 +25,7 @@
             <Font size="18.0" />
          </font>
       </MFXButton>
-      <MFXButton fx:id="editBtn" layoutX="10.0" layoutY="447.0" onAction="#onActonEditBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-effect: dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10); -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Bearbeiten" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <MFXButton fx:id="editBtn" layoutX="10.0" layoutY="447.0" onAction="#onActonEditBtn" rippleColor="WHITE" style="-fx-border-radius: 30px; -fx-background-radius: 30px; -fx-text-fill: #ffffff;" stylesheets="@style.css" text="Bearbeiten" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="20.0" right="20.0" />
          </GridPane.margin>
@@ -40,14 +40,14 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #8a0bcc; -fx-background-radius: 30 30 0 0; -fx-border-radius: 30 30  0 0;" GridPane.columnSpan="2" />
       <TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="799.0" stylesheets="@style.css" translateY="-70.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <columns>
-          <TableColumn fx:id="idCol" prefWidth="54.0" text="ID" />
-          <TableColumn fx:id="nameCol" prefWidth="122.0" text="Name" />
+          <TableColumn fx:id="idCol" prefWidth="59.0" text="ID" />
+          <TableColumn fx:id="nameCol" prefWidth="113.0" text="Name" />
           <TableColumn fx:id="vornameCol" prefWidth="89.0" text="Vorname" />
           <TableColumn fx:id="gebDatumCol" prefWidth="114.0" text="Geb-Datum" />
           <TableColumn fx:id="ahvnrCol" prefWidth="128.0" text="AHVNR" />
           <TableColumn fx:id="regionCol" prefWidth="128.0" text="Region" />
           <TableColumn fx:id="kinderCol" prefWidth="62.0" text="Kinder" />
-          <TableColumn fx:id="geschlechtCol" prefWidth="101.0" text="Geschlecht" />
+          <TableColumn fx:id="geschlechtCol" prefWidth="89.0" text="Geschlecht" />
         </columns>
          <GridPane.margin>
             <Insets />

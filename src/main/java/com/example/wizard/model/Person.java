@@ -1,7 +1,5 @@
 package com.example.wizard.model;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
     private int    id;
@@ -12,6 +10,7 @@ public class Person {
     private String region;
     private int kinder;
     private String geschlecht;
+
 
     @Override
     public String toString() {

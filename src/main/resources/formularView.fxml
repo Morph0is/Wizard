@@ -85,7 +85,7 @@
                <font>
                   <Font name="Arial Rounded MT Bold" size="14.0" />
                </font></Label>
-            <MFXButton fx:id="sendbtn" buttonType="RAISED" depthLevel="LEVEL5" onAction="#onActionsubmitBtn" rippleColor="#eeeeee" style="-fx-background-radius: 30px; -fx-border-radius: 30px; -fx-effect: dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10); -fx-text-fill: white;" styleClass="mfx-button" stylesheets="@style.css" text="Absenden" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+            <MFXButton fx:id="sendbtn" buttonType="RAISED" depthLevel="LEVEL5" onAction="#onActionsubmitBtn" rippleColor="#eeeeee" style="-fx-background-radius: 30px; -fx-border-radius: 30px; -fx-text-fill: white;" styleClass="mfx-button" stylesheets="@style.css" text="Absenden" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>

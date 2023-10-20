@@ -25,6 +25,7 @@ import static com.example.wizard.MainApp.switchToView;
 
 public class TableController {
 
+    private ArrayList<Person> personenListe = new ArrayList<>();
 
     @FXML
     private Label messageLabel;
@@ -52,6 +53,7 @@ public class TableController {
     public void initialize() {
 
         loadData();
+        updateTableViewFromPersonenListe();
     }
 
     public void onActionDeleteBtn(ActionEvent actionEvent) {
@@ -61,7 +63,7 @@ public class TableController {
                 int id = selectedPerson.getId();
                 DatabaseHandler databaseHandler = new DatabaseHandler();
                 PreparedStatement preparedStatement = databaseHandler.getConnection().prepareStatement(SqlStatement.DELETE.getQuery());
-                preparedStatement.setInt(1, id); // Annahme: personID ist die eindeutige ID des zu löschenden Datensatzes
+                preparedStatement.setInt(1, id);
 
                 int rowsDeleted = preparedStatement.executeUpdate();
                 if (rowsDeleted > 0) {
@@ -87,8 +89,12 @@ public class TableController {
             loadData();
         } else {
             messageService("Bitte wähle zuerst eine Person aus.", Colors.RED);
-
         }
+    }
+
+    public void updateTableViewFromPersonenListe() {
+        ObservableList<Person> observableList = FXCollections.observableArrayList(personenListe);
+        tableView.setItems(observableList);
     }
 
     @FXML
@@ -117,6 +123,8 @@ public class TableController {
 
                         Person person = new Person(id, name, vorname, gebDatum, ahvNr, region, kinder, geschlecht);
                         data.add(person);
+
+                        personenListe.add(person); //PERSONEN ARRAY-LIST
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -142,7 +150,6 @@ public class TableController {
                         setText(null);
                         setStyle("");
                     } else {
-                        // Ändern Sie den Wert je nachdem, ob er 0 oder 1 ist
                         setText("1".equals(item) ? "Männlich" : "Weiblich");
                     }
                 }

@@ -1,14 +1,16 @@
 .mfx-button {
     -fx-pref-width: 180px;
     -fx-pref-height: 40px;
-    -fx-text-fill: #262626;
-
+    -fx-effect:  dropshadow(gaussian, #4bf98380, 20, 0.1, 0.1, 10);
     -fx-background-color: linear-gradient(to right, rgba(66, 234, 121, 1.0), rgba(56, 250, 215, 1.0));
 }
 
 .mfx-button:hover {
     -fx-background-color: linear-gradient(to right, rgb(249, 112, 157), rgb(255, 226, 64));
+    -fx-effect: dropshadow(Gaussian, #ffe240, 20, 0.1, 2, 5);
+
 }
+
 
 
 .sidebar {
