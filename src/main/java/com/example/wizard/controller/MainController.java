@@ -28,7 +28,6 @@ public class MainController {
         content.getChildren().add(newContent);
     }
 
-
     WizardController wizardController = new WizardController();
 
 
